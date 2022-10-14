@@ -1,1 +1,3 @@
-# pacman-template
+# PacmanSFML
+
+PacmanSFML for MGiC++
