@@ -1,1 +1,1 @@
-# PacmanSFML
+# pacman-template
