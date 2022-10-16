@@ -2,7 +2,7 @@
 // Created by Quinn on 28/09/2022.
 //
 
-#ifndef PLATFORMERSFML_RESOURCEHANDLER_H
+/*#ifndef PLATFORMERSFML_RESOURCEHANDLER_H
 #define PLATFORMERSFML_RESOURCEHANDLER_H
 
 #pragma once
@@ -27,3 +27,4 @@ class ResourceHandler
 };
 
 #endif // PLATFORMERSFML_RESOURCEHANDLER_H
+*/

@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 #include "ResourceHandler.h"
 #include "Menu.h"
+#include <memory>
 
 class Game
 {
@@ -19,7 +20,7 @@ class Game
 
  private:
   sf::RenderWindow& window;
-  std::unique_ptr<ResourceHandler> resources;
+  //std::unique_ptr<ResourceHandler> resources;
 
   Menu* menu;
   int menu_selected = 1;

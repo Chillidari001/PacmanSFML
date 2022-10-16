@@ -6,7 +6,7 @@ Game::Game(sf::RenderWindow& game_window)
   : window(game_window)
 {
   srand(time(NULL));
-  resources = std::make_unique<ResourceHandler>("Data");
+  //resources = std::make_unique<ResourceHandler>("Data");
 }
 
 Game::~Game()
@@ -17,6 +17,7 @@ Game::~Game()
 bool Game::init()
 {
   menu = new Menu(window.getSize().x, window.getSize().y);
+  //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
 
   return true;
 }
@@ -30,6 +31,7 @@ void Game::render()
 {
   if (game_state == gameScreen::MENU_SCREEN)
   {
+    //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
     window.draw(menu->play_text);
     window.draw(menu->menu_text);
     window.draw(menu->options_text);

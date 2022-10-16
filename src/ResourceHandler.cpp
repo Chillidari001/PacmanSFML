@@ -2,7 +2,7 @@
 // Created by Quinn on 28/09/2022.
 //
 
-#include "ResourceHandler.h"
+/*#include "ResourceHandler.h"
 
 sf::Texture& ResourceHandler::getTextureRef(const std::string& name)
 {
@@ -64,3 +64,4 @@ ResourceHandler::ResourceHandler(const std::string& assetDirectory)
 
   std::cout << "Loading Complete" << std::endl;
 }
+*/
