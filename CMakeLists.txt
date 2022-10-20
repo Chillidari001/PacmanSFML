@@ -10,8 +10,11 @@ endif()
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)
 
-set(SOURCE_FILES src/main.cpp src/Game.cpp src/Game.h src/ResourceHandler.cpp src/ResourceHandler.h src/Menu.cpp src/Menu.h)
+set(SOURCE_FILES src/main.cpp src/Game.cpp src/Game.h src/ResourceHandler.cpp src/ResourceHandler.h src/Menu.cpp src/Menu.h src/FreeFuncs.cpp src/ImageLayer.cpp src/LayerGroup.cpp
+         src/Map.cpp src/miniz.c src/miniz.h src/Object.cpp src/ObjectGroup.cpp src/ObjectTypes.cpp src/Property.cpp src/TileLayer.cpp src/Tileset.cpp)
 add_executable(PacmanSFML ${SOURCE_FILES})
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake_modules")
 

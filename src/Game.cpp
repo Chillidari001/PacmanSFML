@@ -49,6 +49,10 @@ void Game::mouseClicked(sf::Event event)
 
 void Game::keyPressed(sf::Event event)
 {
+  if(event.key.code == sf::Keyboard::Escape)
+  {
+    window.close();
+  }
   if(game_state == gameScreen::MENU_SCREEN)
   {
     if (menu_selected == 1 && event.key.code == sf::Keyboard::Right)
