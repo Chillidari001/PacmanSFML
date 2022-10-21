@@ -1,6 +1,7 @@
 
 #include "Game.h"
 #include <iostream>
+#include "Map.cpp"
 
 Game::Game(sf::RenderWindow& game_window)
   : window(game_window)
@@ -16,10 +17,27 @@ Game::~Game()
 
 bool Game::init()
 {
-  menu = new Menu(window.getSize().x, window.getSize().y);
+  menu = std::make_unique<Menu>(window.getSize().x, window.getSize().y);
   //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
 
   return true;
+}
+
+void Game::tileHandler()
+{
+  //if statement loads spritesheet used in tiled and checks if it loads
+  sf::Texture tileMap;
+  if(!tileMap.loadFromFile("Data/tileAssets/tilemap.png"))
+  {
+    std::cout << "FAILED TO LOAD TILEMAP" << std::endl;
+  }
+  //if statement loads tilemap generated from tiled and checks if loaded
+  sf::Texture map;
+  if(!map.loadFromFile("Data/tileAssets/test_map.tmx"))
+  {
+    std::cout << "FAILED TO LOAD TMX MAP" << std::endl;
+  }
+
 }
 
 void Game::update(float dt)
@@ -49,10 +67,6 @@ void Game::mouseClicked(sf::Event event)
 
 void Game::keyPressed(sf::Event event)
 {
-  if(event.key.code == sf::Keyboard::Escape)
-  {
-    window.close();
-  }
   if(game_state == gameScreen::MENU_SCREEN)
   {
     if (menu_selected == 1 && event.key.code == sf::Keyboard::Right)
@@ -94,6 +108,18 @@ void Game::keyPressed(sf::Event event)
       {
         window.close();
       }
+    }
+    if(event.key.code == sf::Keyboard::Escape)
+    {
+      window.close();
+    }
+  }
+
+  if(game_state == gameScreen::GAME_SCREEN)
+  {
+    if(event.key.code == sf::Keyboard::Escape)
+    {
+      game_state = gameScreen::MENU_SCREEN;
     }
   }
 }

@@ -17,12 +17,14 @@ class Game
   void render();
   void mouseClicked(sf::Event event);
   void keyPressed(sf::Event event);
+  void tileHandler();
 
  private:
   sf::RenderWindow& window;
   //std::unique_ptr<ResourceHandler> resources;
 
-  Menu* menu;
+  //Menu* menu;
+  std::unique_ptr<Menu> menu;
   int menu_selected = 1;
 
   enum gameScreen
