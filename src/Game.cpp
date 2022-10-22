@@ -1,7 +1,6 @@
 
 #include "Game.h"
 #include <iostream>
-#include "Map.cpp"
 
 Game::Game(sf::RenderWindow& game_window)
   : window(game_window)
@@ -23,7 +22,7 @@ bool Game::init()
   return true;
 }
 
-void Game::tileHandler()
+/*void Game::tileHandler()
 {
   //if statement loads spritesheet used in tiled and checks if it loads
   sf::Texture tileMap;
@@ -38,11 +37,24 @@ void Game::tileHandler()
     std::cout << "FAILED TO LOAD TMX MAP" << std::endl;
   }
 
-}
+}*/
 
 void Game::update(float dt)
 {
-
+  switch(game_state)
+  {
+    case GAME_SCREEN:
+      player = std::make_unique<Player>();
+      player->playerInput();
+      player->playerMovement();
+      break;
+    case PAUSE_SCREEN:
+      break;
+    case WIN_SCREEN:
+      break;
+    case LOSE_SCREEN:
+      break;
+  }
 }
 
 void Game::render()
@@ -54,6 +66,11 @@ void Game::render()
     window.draw(menu->menu_text);
     window.draw(menu->options_text);
     window.draw(menu->exit_text);
+  }
+  if(game_state == gameScreen::GAME_SCREEN)
+  {
+    player = std::make_unique<Player>();
+    window.draw(player->playerSprite);
   }
 }
 
@@ -121,6 +138,8 @@ void Game::keyPressed(sf::Event event)
     {
       game_state = gameScreen::MENU_SCREEN;
     }
+
+    player->playerInput();
   }
 }
 

@@ -6,6 +6,8 @@
 #include "ResourceHandler.h"
 #include "Menu.h"
 #include <memory>
+#include "Player.h"
+//#include "Map.cpp"  multipled "multiple definition" errors on home pc, clueless as to why.
 
 class Game
 {
@@ -24,6 +26,7 @@ class Game
   //std::unique_ptr<ResourceHandler> resources;
 
   //Menu* menu;
+  std::unique_ptr<Player> player;
   std::unique_ptr<Menu> menu;
   int menu_selected = 1;
 
