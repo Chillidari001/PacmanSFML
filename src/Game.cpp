@@ -17,6 +17,7 @@ Game::~Game()
 bool Game::init()
 {
   menu = std::make_unique<Menu>(window.getSize().x, window.getSize().y);
+  player = std::make_unique<Player>();
   //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
 
   return true;
@@ -44,7 +45,6 @@ void Game::update(float dt)
   switch(game_state)
   {
     case GAME_SCREEN:
-      player = std::make_unique<Player>();
       player->playerInput();
       player->playerMovement();
       break;
@@ -69,7 +69,6 @@ void Game::render()
   }
   if(game_state == gameScreen::GAME_SCREEN)
   {
-    player = std::make_unique<Player>();
     window.draw(player->playerSprite);
   }
 }

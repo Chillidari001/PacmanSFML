@@ -13,7 +13,7 @@ Player::Player()
 
   playerSprite.setTexture(playerTexture);
 
-  playerSprite.setScale(0.15f, 0.15f);
+  playerSprite.setScale(0.10f, 0.10f);
 }
 
 Player::~Player()
@@ -46,19 +46,21 @@ void Player::playerMovement()
   switch(playerMovementState)
   {
     case MOVE_LEFT:
-      playerSprite.move(5.f,0.f);
+      playerSprite.move(-3.f,0.f);
+      //playerSprite.setRotation(180.0f);
       std::cout << "Player move left" << std::endl;
       break;
     case MOVE_RIGHT:
-      playerSprite.move(-5.f,0.f);
+      playerSprite.move(3.f,0.f);
+      //playerSprite.setRotation(0.0f);
       std::cout << "Player move right" << std::endl;
       break;
     case MOVE_UP:
-      playerSprite.move(0.f,0.5f);
+      playerSprite.move(0.f,-3.f);
       std::cout << "Player move up" << std::endl;
       break;
     case MOVE_DOWN:
-      playerSprite.move(0.f,-0.5f);
+      playerSprite.move(0.f,3.f);
       std::cout << "Player move down" << std::endl;
       break;
     case MOVE_STATIONARY:
@@ -66,4 +68,5 @@ void Player::playerMovement()
       std::cout << "Player stationary" << std::endl;
       break;
   }
+  //std::cout << std::to_string(playerSprite.getLocalBounds());
 }

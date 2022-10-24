@@ -27,7 +27,6 @@ class Player
     MOVE_DOWN,
     MOVE_STATIONARY
   };
-
   enum playerMovement playerMovementState = MOVE_STATIONARY;
 };
 

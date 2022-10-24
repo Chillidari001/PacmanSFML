@@ -7,7 +7,7 @@
 #include "Menu.h"
 #include <memory>
 #include "Player.h"
-//#include "Map.cpp"  multipled "multiple definition" errors on home pc, clueless as to why.
+//#include "Map.cpp"  //multipled "multiple definition" errors on home pc, clueless as to why.
 
 class Game
 {
