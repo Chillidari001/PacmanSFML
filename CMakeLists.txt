@@ -3,9 +3,9 @@ project(PacmanSFML)
 
 set(CMAKE_CXX_STANDARD 17)
 
-if(WIN32)
-    set(SFML_STATIC_LIBRARIES TRUE)
-    set(CMAKE_EXE_LINKER_FLAGS "-static")
+if(WIN32) 
+	set(SFML_STATIC_LIBRARIES TRUE) 
+	set(CMAKE_EXE_LINKER_FLAGS "-static") 
 endif()
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)

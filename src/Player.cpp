@@ -13,7 +13,7 @@ Player::Player()
 
   playerSprite.setTexture(playerTexture);
 
-  playerSprite.setScale(0.10f, 0.10f);
+  playerSprite.setScale(0.05f, 0.05f);
 }
 
 Player::~Player()
