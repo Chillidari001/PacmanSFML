@@ -14,6 +14,12 @@ Player::Player()
   playerSprite.setTexture(playerTexture);
 
   playerSprite.setScale(0.05f, 0.05f);
+
+//  auto offset = newOrigin - playerSprite.getOrigin();
+//  playerSprite.setOrigin(newOrigin);
+//  playerSprite.move(offset);
+
+  playerSprite.setOrigin((sf::Vector2f)playerTexture.getSize() / 2.f);
 }
 
 Player::~Player()
@@ -46,21 +52,23 @@ void Player::playerMovement()
   switch(playerMovementState)
   {
     case MOVE_LEFT:
-      playerSprite.move(-3.f,0.f);
-      //playerSprite.setRotation(180.0f);
+      playerSprite.move(-2.f,0.f);
+      playerSprite.setRotation(180.0f);
       std::cout << "Player move left" << std::endl;
       break;
     case MOVE_RIGHT:
-      playerSprite.move(3.f,0.f);
-      //playerSprite.setRotation(0.0f);
+      playerSprite.move(2.f,0.f);
+      playerSprite.setRotation(0.f);
       std::cout << "Player move right" << std::endl;
       break;
     case MOVE_UP:
-      playerSprite.move(0.f,-3.f);
+      playerSprite.move(0.f,-2.f);
+      playerSprite.setRotation(-90.f);
       std::cout << "Player move up" << std::endl;
       break;
     case MOVE_DOWN:
-      playerSprite.move(0.f,3.f);
+      playerSprite.move(0.f,2.f);
+      playerSprite.setRotation(90.f);
       std::cout << "Player move down" << std::endl;
       break;
     case MOVE_STATIONARY:

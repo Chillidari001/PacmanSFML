@@ -10,6 +10,7 @@
 #include "tmxlite/Map.hpp"
 #include "tmxlite/TileLayer.hpp"//multipled "multiple definition" errors on home pc, clueless as to why.
 #include <vector>
+#include "TileHandler.h"
 
 class Game
 {
@@ -21,7 +22,8 @@ class Game
   void render();
   void mouseClicked(sf::Event event);
   void keyPressed(sf::Event event);
-  void tileHandler();
+
+  void collisionHandler();
 
  private:
   sf::RenderWindow& window;
@@ -30,11 +32,9 @@ class Game
   //Menu* menu;
   std::unique_ptr<Player> player;
   std::unique_ptr<Menu> menu;
-  int menu_selected = 1;
+  std::unique_ptr<TileHandler> tileHandler;
 
-  sf::Texture tileMap;
-  tmx::Map map;
-  sf::Sprite tilesSprites[23][21];
+  int menu_selected = 1;
 
   enum gameScreen
   {
