@@ -28,8 +28,7 @@ class Player
     MOVE_STATIONARY
   };
   enum playerMovement playerMovementState = MOVE_STATIONARY;
-
-  sf::Vector2f newOrigin;
+  
 };
 
 #endif // PACMANSFML_PLAYER_H

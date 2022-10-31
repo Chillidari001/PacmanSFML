@@ -6,12 +6,12 @@
 TileHandler::TileHandler()
 {
   //if statement loads spritesheet used in tiled and checks if it loads
-  if(!tileMap.loadFromFile("E:\\Learning Projects\\PacmanSFML\\Data\\tileAssets\\kennytileset.png"))
+  if(!tileMap.loadFromFile(R"(E:\Learning Projects\PacmanSFML\Data\tileAssets\kennytileset.png)"))
   {
     std::cout << "FAILED TO LOAD TILEMAP" << std::endl;
   }
   //if statement loads tilemap generated from tiled and checks if loaded
-  if(!map.load("E:\\Learning Projects\\PacmanSFML\\Data\\tileAssets\\kennyMap.tmx"))
+  if(!map.load(R"(E:\Learning Projects\PacmanSFML\Data\tileAssets\kennyMap.tmx)"))
   {
     std::cout << "FAILED TO LOAD TMX MAP" << std::endl;
   }
@@ -26,8 +26,8 @@ TileHandler::TileHandler()
   //and assigns a position based on their index. since all sprites
   //are using the same texture sheet it also adjusted which part of
   //the spritesheet is rendered based on the tiles ID
-  int idx = 0;
-  int idy = 0;
+  int idx;
+  int idy;
 
   for (int j = 0; j < tiles.size(); ++j)
   {

@@ -10,7 +10,7 @@ int main()
 
   // create window and set up
   sf::RenderWindow window(sf::VideoMode(1080, 720), "Pacman game");
-  window.setFramerateLimit(60);
+  window.setFramerateLimit(120);
 
   //initialise an instance of the game class
   Game game(window);
