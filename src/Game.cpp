@@ -16,17 +16,44 @@ bool Game::init()
 {
   menu = std::make_unique<Menu>(window.getSize().x, window.getSize().y);
   player = std::make_unique<Player>();
+  tileHandler = std::make_unique<TileHandler>(window);
+
   player->playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2);
-
-  tileHandler = std::make_unique<TileHandler>();
-  //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
-
   return true;
 }
 
 void Game::collisionHandler()
 {
+//  for(int i = 0; i < 23; ++i)
+//  {
+//    for(int j = 0; j < 21; ++j)
+//    {
+//      if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[j][j].getGlobalBounds()))
+//      {
+//        std::cout << "PLAYER COLLISION" << std::endl;
+//      }
+//    } window.getSize();
+//  }
 
+//const auto& layers = tileHandler->map.getLayers();
+//const auto& collisionLayer = *dynamic_cast<const tmx::TileLayer*>(layers[0].get());
+//std::vector<tmx::TileLayer::Tile> cTiles = collisionLayer.getTiles();
+//
+//  for (tmx::TileLayer::Tile tile : cTiles)
+//  {
+//    //std::cout << "Found Layer: " << collisionLayer.getName() << std::endl;
+//    //::cout << "Layer Type: " << int(collisionLayer.getType()) << std::endl;
+//    //std::cout << tile.ID << std::endl;
+//  }
+//
+//  if(collisionLayer.getType() == tmx::Layer::Type::Object)
+//  {
+//    std::cout << collisionLayer.getName() << " has " << collisionLayer.getLayerAs<tmx::ObjectGroup>().getObjects().size() << " objects" << std::endl;
+//  }
+//  else
+//  {
+//    //std::cout << "BORKED" << std::endl;
+//  }
 }
 
 void Game::update(float dt)
@@ -34,6 +61,7 @@ void Game::update(float dt)
   switch(game_state)
   {
     case GAME_SCREEN:
+      collisionHandler();
       player->playerInput();
       player->playerMovement();
       break;

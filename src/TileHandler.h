@@ -9,17 +9,21 @@
 #include "SFML/Graphics.hpp"
 #include "tmxlite/Map.hpp"
 #include "tmxlite/TileLayer.hpp"
+#include "Player.h"
 
 class TileHandler
 {
  public:
-  TileHandler();
+  TileHandler(sf::RenderWindow& window);
   ~TileHandler();
   sf::Sprite tilesSprites[23][21];
+  std::unique_ptr<Player> player;
+
+  tmx::Map map;
 
  private:
   sf::Texture tileMap;
-  tmx::Map map;
+  sf::RenderWindow& window;
 };
 
 #endif // PACMANSFML_TILEHANDLER_H

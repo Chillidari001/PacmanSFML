@@ -13,7 +13,7 @@ Player::Player()
 
   playerSprite.setTexture(playerTexture);
 
-  playerSprite.setScale(0.05f, 0.05f);
+  playerSprite.setScale(0.045f, 0.045f);
 
 //  auto offset = newOrigin - playerSprite.getOrigin();
 //  playerSprite.setOrigin(newOrigin);
@@ -52,28 +52,28 @@ void Player::playerMovement()
   switch(playerMovementState)
   {
     case MOVE_LEFT:
-      playerSprite.move(-2.f,0.f);
+      playerSprite.move(-1.5f,0.f);
       playerSprite.setRotation(180.0f);
-      std::cout << "Player move left" << std::endl;
+      //std::cout << "Player move left" << std::endl;
       break;
     case MOVE_RIGHT:
-      playerSprite.move(2.f,0.f);
+      playerSprite.move(1.5f,0.f);
       playerSprite.setRotation(0.f);
-      std::cout << "Player move right" << std::endl;
+      //std::cout << "Player move right" << std::endl;
       break;
     case MOVE_UP:
-      playerSprite.move(0.f,-2.f);
+      playerSprite.move(0.f,-1.5f);
       playerSprite.setRotation(-90.f);
-      std::cout << "Player move up" << std::endl;
+      //std::cout << "Player move up" << std::endl;
       break;
     case MOVE_DOWN:
-      playerSprite.move(0.f,2.f);
+      playerSprite.move(0.f,1.5f);
       playerSprite.setRotation(90.f);
-      std::cout << "Player move down" << std::endl;
+      //std::cout << "Player move down" << std::endl;
       break;
     case MOVE_STATIONARY:
       playerSprite.move(0.f,0.f);
-      std::cout << "Player stationary" << std::endl;
+      //std::cout << "Player stationary" << std::endl;
       break;
   }
   //std::cout << std::to_string(playerSprite.getLocalBounds());
