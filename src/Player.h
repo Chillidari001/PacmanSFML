@@ -26,6 +26,19 @@ class Player
   };
   enum playerMovement playerMovementState = MOVE_STATIONARY;
 
+  enum playerBlock
+  {
+    BLOCK_LEFT,
+    BLOCK_RIGHT,
+    BLOCK_UP,
+    BLOCK_DOWN,
+    BLOCK_NONE
+  };
+
+  void playerBlockUpdate();
+
+  enum playerBlock playerBlockState = BLOCK_NONE;
+
  private:
   //sf::Texture playerTexture;
   //sf::Sprite playerSprite;

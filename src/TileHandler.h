@@ -17,14 +17,14 @@ class TileHandler
  public:
   TileHandler(sf::RenderWindow& window);
   ~TileHandler();
-  //sf::Sprite tilesSprites[23][21];
+  Tile tilesSprites[23][21];
   std::vector<std::vector<std::unique_ptr<Tile>>> TILE_MAP;
 
   tmx::Map map;
 
  private:
-  //sf::Texture tileMap;
-  std::unique_ptr<sf::Texture> tileMap = std::make_unique<sf::Texture>();
+  sf::Texture tileMap;
+  //::unique_ptr<sf::Texture> tileMap = std::make_unique<sf::Texture>();
   sf::RenderWindow& window;
 };
 

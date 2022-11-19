@@ -16,9 +16,9 @@ class Tile
   ~Tile() = default;
   std::unique_ptr<sf::Sprite>& GetSprite();
   int GetID() const;
+  int tileID = 0;
 
  private:
-  int tileID = 0;
   std::unique_ptr<sf::Sprite> tileSprite;
 };
 

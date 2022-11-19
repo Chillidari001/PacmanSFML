@@ -78,3 +78,24 @@ void Player::playerMovement()
   }
   //std::cout << std::to_string(playerSprite.getLocalBounds());
 }
+
+void Player::playerBlockUpdate()
+{
+  switch(playerBlockState)
+  {
+    case BLOCK_LEFT:
+      if(playerMovementState == MOVE_LEFT)
+      {
+        playerMovementState = MOVE_STATIONARY;
+      }
+      break;
+    case BLOCK_RIGHT:
+      break;
+    case BLOCK_UP:
+      break;
+    case BLOCK_DOWN:
+      break;
+    case BLOCK_NONE:
+      break;
+  }
+}

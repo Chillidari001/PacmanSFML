@@ -19,30 +19,68 @@ bool Game::init()
   tileHandler = std::make_unique<TileHandler>(window);
   ghost = std::make_unique<GhostHandler>();
 
-  ghost->ghostSprite.setPosition(window.getSize().x/2.5, window.getSize().y/2.5);
+  ghost->ghostSprite.setPosition(window.getSize().x/2.3, window.getSize().y/2.5);
   player->playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2);
   return true;
 }
 
 void Game::collisionHandler()
 {
-  for (const auto& tile:tileHandler->TILE_MAP[0])
-  {
-    float distance = sqrt(powf(tile->GetSprite()->getPosition().x - player->playerSprite.getPosition().x, 2)
-                            * powf(tile->GetSprite()->getPosition().y - player->playerSprite.getPosition().y, 2));
+//  for (const auto& tile:tileHandler->TILE_MAP[0])
+//  {
+//    float distance = sqrt(powf(tile->GetSprite()->getPosition().x - player->playerSprite.getPosition().x, 2)
+//                            * powf(tile->GetSprite()->getPosition().y - player->playerSprite.getPosition().y, 2));
+//
+//    if(distance < 300)
+//    {
+//      if(player->playerSprite.getGlobalBounds().intersects(tile->GetSprite()->getGlobalBounds()))
+//      {
+//        if(tile->GetID() != (3075))
+//        {
+//          player->playerMovementState = Player::playerMovement::MOVE_STATIONARY;
+//          std::cout << "COLLIDED WITH A WALL" << std::endl;
+//        }
+//      }
+//    }
+//  }
 
-    if(distance < 300)
+  for(int a = 0; a < 23; ++a)
+  {
+    for(int b = 0; b < 21; ++b)
     {
-      if(player->playerSprite.getGlobalBounds().intersects(tile->GetSprite()->getGlobalBounds()))
-      {
-        if(tile->GetID() != (3075))
+      //std::cout << tileHandler->tilesSprites[a][b].GetID() << "\n";
+      float distance = sqrt(powf(tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x - player->playerSprite.getPosition().x, 2)
+                            * powf(tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y - player->playerSprite.getPosition().y, 2));
+//      if(distance < 150)
+//      {
+        if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
         {
-          player->playerMovementState = Player::playerMovement::MOVE_STATIONARY;
-          std::cout << "COLLIDED WITH A WALL" << std::endl;
+          if(tileHandler->tilesSprites[a][b].tileID == 394)
+          {
+            if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
+            {
+//              if(player->playerMovementState == Player::MOVE_LEFT)
+//              {
+//                player->playerBlockState = Player::BLOCK_LEFT;
+//              }
+              //std::cout << "COLLIDED WITH A WALL" << "\n";
+            }
+//            else
+//            {
+//              player->playerBlockState = Player::BLOCK_NONE;
+//            }
+          }
         }
+//        if(tileHandler->tilesSprites[a][b].tileID == 3075)
+//        {
+//          if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
+//          {
+//            //std::cout << "COLLIDED WITH COIN" << "\n";
+//            tileHandler->tilesSprites[a][b].GetSprite()->setTextureRect(sf::IntRect(0,0,0,0));
+//          }
+//        }
       }
     }
-  }
 }
 
 void Game::update(float dt)
@@ -53,6 +91,7 @@ void Game::update(float dt)
       collisionHandler();
       ghost->ghostMovement();
       player->playerInput();
+      player->playerBlockUpdate();
       player->playerMovement();
       break;
     case PAUSE_SCREEN:
@@ -74,34 +113,48 @@ void Game::render()
       window.draw(menu->exit_text);
       break;
     case GAME_SCREEN:
-      window.draw(player->playerSprite);
-      window.draw(ghost->ghostSprite);
       //range based for loop
-      for(const auto& layer:tileHandler->TILE_MAP)
-      {
-        for(const auto& tile : layer)
+//      for(const auto& layer:tileHandler->TILE_MAP)
+//      {
+//        for(const auto& tile : layer)
+//        {
+//          if(tile->GetID() != 0)
+//          {
+//            window.draw(*tile->GetSprite());
+//          }
+//        }
+//      }
+//      for(auto & tilesSprite : tileHandler->tilesSprites)
+//      {
+//        for(const auto & j : tilesSprite)
+//        {
+//          window.draw(tileHandler->tilesSprites.Get);
+//        }
+//      }
+        for(int i = 0; i < 23; ++i)
         {
-          if(tile->GetID() != 0)
+          for(int j = 0; j < 21; ++j)
           {
-            window.draw(*tile->GetSprite());
+            window.draw(*tileHandler->tilesSprites[i][j].GetSprite());
           }
         }
-      }
+
+        window.draw(player->playerSprite);
+        window.draw(ghost->ghostSprite);
+
       break;
     case PAUSE_SCREEN:
       window.draw(player->playerSprite);
       window.draw(ghost->ghostSprite);
       //range based for loop
-      for(const auto& layer:tileHandler->TILE_MAP)
+      for(int i = 0; i < 23; ++i)
       {
-        for(const auto& tile : layer)
+        for(int j = 0; j < 21; ++j)
         {
-          if(tile->GetID() != 0)
-          {
-            window.draw(*tile->GetSprite());
-          }
+          window.draw(*tileHandler->tilesSprites[i][j].GetSprite());
         }
       }
+
   }
 }
 
