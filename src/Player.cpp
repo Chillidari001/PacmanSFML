@@ -13,7 +13,7 @@ Player::Player()
 
   playerSprite.setTexture(playerTexture);
 
-  playerSprite.setScale(0.045f, 0.045f);
+  playerSprite.setScale(0.040f, 0.040f);
 
 //  auto offset = newOrigin - playerSprite.getOrigin();
 //  playerSprite.setOrigin(newOrigin);

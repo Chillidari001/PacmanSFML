@@ -13,7 +13,6 @@ class Menu
  public:
   Menu(float win_x, float win_y);
   void inputSwitch(int on);
-  void settingsSwitch(int on);
   ~Menu();
   sf::Text menu_text;
   sf::Text play_text;

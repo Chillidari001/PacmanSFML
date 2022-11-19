@@ -14,11 +14,8 @@ class Player
   ~Player();
   void playerMovement();
   void playerInput();
-  sf::Texture playerTexture;
   sf::Sprite playerSprite;
- private:
-  //sf::Texture playerTexture;
-  //sf::Sprite playerSprite;
+
   enum playerMovement
   {
     MOVE_LEFT,
@@ -28,7 +25,11 @@ class Player
     MOVE_STATIONARY
   };
   enum playerMovement playerMovementState = MOVE_STATIONARY;
-  
+
+ private:
+  //sf::Texture playerTexture;
+  //sf::Sprite playerSprite;
+  sf::Texture playerTexture;
 };
 
 #endif // PACMANSFML_PLAYER_H

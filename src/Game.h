@@ -11,6 +11,8 @@
 #include "tmxlite/TileLayer.hpp"//multipled "multiple definition" errors on home pc, clueless as to why.
 #include <vector>
 #include "TileHandler.h"
+#include "math.h"
+#include "GhostHandler.h"
 
 class Game
 {
@@ -33,13 +35,13 @@ class Game
   std::unique_ptr<Player> player;
   std::unique_ptr<Menu> menu;
   std::unique_ptr<TileHandler> tileHandler;
+  std::unique_ptr<GhostHandler> ghost;
 
   int menu_selected = 1;
 
   enum gameScreen
   {
     MENU_SCREEN,
-    SETTINGS_SCREEN,
     GAME_SCREEN,
     PAUSE_SCREEN,
     WIN_SCREEN,
@@ -54,6 +56,8 @@ class Game
     LEVEL_2,
     LEVEL_3
   };
+
+  bool paused = false;
 };
 
 #endif // PLATFORMER_GAME_H

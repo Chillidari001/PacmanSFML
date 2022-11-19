@@ -17,43 +17,32 @@ bool Game::init()
   menu = std::make_unique<Menu>(window.getSize().x, window.getSize().y);
   player = std::make_unique<Player>();
   tileHandler = std::make_unique<TileHandler>(window);
+  ghost = std::make_unique<GhostHandler>();
 
+  ghost->ghostSprite.setPosition(window.getSize().x/2.5, window.getSize().y/2.5);
   player->playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2);
   return true;
 }
 
 void Game::collisionHandler()
 {
-//  for(int i = 0; i < 23; ++i)
-//  {
-//    for(int j = 0; j < 21; ++j)
-//    {
-//      if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[j][j].getGlobalBounds()))
-//      {
-//        std::cout << "PLAYER COLLISION" << std::endl;
-//      }
-//    } window.getSize();
-//  }
+  for (const auto& tile:tileHandler->TILE_MAP[0])
+  {
+    float distance = sqrt(powf(tile->GetSprite()->getPosition().x - player->playerSprite.getPosition().x, 2)
+                            * powf(tile->GetSprite()->getPosition().y - player->playerSprite.getPosition().y, 2));
 
-//const auto& layers = tileHandler->map.getLayers();
-//const auto& collisionLayer = *dynamic_cast<const tmx::TileLayer*>(layers[0].get());
-//std::vector<tmx::TileLayer::Tile> cTiles = collisionLayer.getTiles();
-//
-//  for (tmx::TileLayer::Tile tile : cTiles)
-//  {
-//    //std::cout << "Found Layer: " << collisionLayer.getName() << std::endl;
-//    //::cout << "Layer Type: " << int(collisionLayer.getType()) << std::endl;
-//    //std::cout << tile.ID << std::endl;
-//  }
-//
-//  if(collisionLayer.getType() == tmx::Layer::Type::Object)
-//  {
-//    std::cout << collisionLayer.getName() << " has " << collisionLayer.getLayerAs<tmx::ObjectGroup>().getObjects().size() << " objects" << std::endl;
-//  }
-//  else
-//  {
-//    //std::cout << "BORKED" << std::endl;
-//  }
+    if(distance < 300)
+    {
+      if(player->playerSprite.getGlobalBounds().intersects(tile->GetSprite()->getGlobalBounds()))
+      {
+        if(tile->GetID() != (3075))
+        {
+          player->playerMovementState = Player::playerMovement::MOVE_STATIONARY;
+          std::cout << "COLLIDED WITH A WALL" << std::endl;
+        }
+      }
+    }
+  }
 }
 
 void Game::update(float dt)
@@ -62,6 +51,7 @@ void Game::update(float dt)
   {
     case GAME_SCREEN:
       collisionHandler();
+      ghost->ghostMovement();
       player->playerInput();
       player->playerMovement();
       break;
@@ -79,31 +69,37 @@ void Game::render()
   switch (game_state)
   {
     case MENU_SCREEN:
-      //std::unique_ptr<Menu> menu(new Menu(window.getSize().x, window.getSize().y));  smart pointer attempt
       window.draw(menu->play_text);
       window.draw(menu->menu_text);
-      window.draw(menu->options_text);
       window.draw(menu->exit_text);
       break;
     case GAME_SCREEN:
       window.draw(player->playerSprite);
-
-      //iterate through array of sprites and render them on screen
-
-//          for(int i = 0; i < 23; ++i)
-//          {
-//            for(int j = 0; j < 21; ++j)
-//            {
-//              window.draw(tileHandler->tilesSprites[i][j]);
-//            }
-//          }
-
+      window.draw(ghost->ghostSprite);
       //range based for loop
-      for(auto & tilesSprite : tileHandler->tilesSprites)
+      for(const auto& layer:tileHandler->TILE_MAP)
       {
-        for(const auto & j : tilesSprite)
+        for(const auto& tile : layer)
         {
-          window.draw(j);
+          if(tile->GetID() != 0)
+          {
+            window.draw(*tile->GetSprite());
+          }
+        }
+      }
+      break;
+    case PAUSE_SCREEN:
+      window.draw(player->playerSprite);
+      window.draw(ghost->ghostSprite);
+      //range based for loop
+      for(const auto& layer:tileHandler->TILE_MAP)
+      {
+        for(const auto& tile : layer)
+        {
+          if(tile->GetID() != 0)
+          {
+            window.draw(*tile->GetSprite());
+          }
         }
       }
   }
@@ -127,21 +123,9 @@ void Game::keyPressed(sf::Event event)
       std::cout << menu_selected;
       menu->inputSwitch(menu_selected);
     }
-    else if (menu_selected == 2 && event.key.code == sf::Keyboard::Right)
-    {
-      menu_selected = 3;
-      std::cout << menu_selected;
-      menu->inputSwitch(menu_selected);
-    }
     if (menu_selected == 2 && event.key.code == sf::Keyboard::Left)
     {
       menu_selected = 1;
-      std::cout << menu_selected;
-      menu->inputSwitch(menu_selected);
-    }
-    if (menu_selected == 3 && event.key.code == sf::Keyboard::Left)
-    {
-      menu_selected = 2;
       std::cout << menu_selected;
       menu->inputSwitch(menu_selected);
     }
@@ -154,10 +138,6 @@ void Game::keyPressed(sf::Event event)
         game_state = gameScreen::GAME_SCREEN;
       }
       if(menu_selected == 2)
-      {
-        window.close();
-      }
-      if(menu_selected == 3)
       {
         window.close();
       }
@@ -176,5 +156,20 @@ void Game::keyPressed(sf::Event event)
     }
 
     player->playerInput();
+  }
+  if(game_state == gameScreen::GAME_SCREEN || game_state == gameScreen::PAUSE_SCREEN)
+  {
+    if(event.key.code == sf::Keyboard::P)
+    {
+      paused = !paused;
+      if(paused)
+      {
+        game_state = gameScreen::PAUSE_SCREEN;
+      }
+      if(!paused)
+      {
+        game_state = gameScreen::GAME_SCREEN;
+      }
+    }
   }
 }
