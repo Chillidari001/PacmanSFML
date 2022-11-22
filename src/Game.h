@@ -27,6 +27,7 @@ class Game
 
   void collisionHandler();
 
+
  private:
   sf::RenderWindow& window;
   //std::unique_ptr<ResourceHandler> resources;
@@ -58,6 +59,10 @@ class Game
   };
 
   bool paused = false;
+  int score = 0;
+
+  sf::Text score_text;
+  sf::Font game_font;
 };
 
 #endif // PLATFORMER_GAME_H

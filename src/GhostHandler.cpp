@@ -24,7 +24,7 @@ void GhostHandler::ghostMovement()
   switch(ghostCurrentState)
   {
     case SLEEP:
-      std::cout << "Ghost Sleeping" << "\n";
+      //std::cout << "Ghost Sleeping" << "\n";
       break;
     case CHASE:
       break;

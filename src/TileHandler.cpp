@@ -117,7 +117,7 @@ TileHandler::TileHandler(sf::RenderWindow& window) : window(window)
       {
         tilesSprites[idx][idy].GetSprite()->setTextureRect(sf::IntRect(20*2, 20*24, 20, 20));
         tilesSprites[idx][idy].GetSprite()->setScale(0.5f, 0.5f);
-        tilesSprites[idx][idy].GetSprite()->move(10, 12);
+        tilesSprites[idx][idy].GetSprite()->move(20, 14);
         break;
       }
 
