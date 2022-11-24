@@ -13,7 +13,8 @@ class GhostHandler
   GhostHandler();
   ~GhostHandler();
   void ghostMovement();
-  sf::Sprite ghostSprite;
+  bool initialiseSprite(sf::Texture &texture, std::string filename);
+  sf::Sprite* getSprite();
 
   enum ghostState
   {
@@ -34,8 +35,7 @@ class GhostHandler
   enum ghostState ghostCurrentState = SLEEP;
 
  private:
-  //sf::Texture playerTexture;
-  //sf::Sprite playerSprite;
+  sf::Sprite* sprite = nullptr;
   sf::Texture ghostTexture;
 };
 

@@ -5,18 +5,28 @@
 #include "GhostHandler.h"
 GhostHandler::GhostHandler()
 {
-  if(!ghostTexture.loadFromFile(R"(E:\Learning Projects\PacmanSFML\Data\Images\PinkGhost.png)"))
-  {
-    std::cout << "Ghost texture not loaded" << std::endl;
-  }
-  ghostSprite.setTexture(ghostTexture);
-  ghostSprite.setScale(0.025f, 0.025f);
-  ghostSprite.setOrigin((sf::Vector2f)ghostTexture.getSize() / 2.f);
+  sprite =  new sf::Sprite();
 
 }
 GhostHandler::~GhostHandler()
 {
+  delete sprite;
+  sprite = nullptr;
+}
 
+bool GhostHandler::initialiseSprite(sf::Texture& texture, std::string filename)
+{
+  if(!texture.loadFromFile(filename))
+  {
+    std::cout << filename << "failed to load";
+  }
+  sprite->setTexture(texture);
+  return true;
+}
+
+sf::Sprite* GhostHandler::getSprite()
+{
+  return sprite;
 }
 
 void GhostHandler::ghostMovement()

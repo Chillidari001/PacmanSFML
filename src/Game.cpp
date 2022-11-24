@@ -19,7 +19,10 @@ bool Game::init()
   tileHandler = std::make_unique<TileHandler>(window);
   ghost = std::make_unique<GhostHandler>();
 
-  ghost->ghostSprite.setPosition(window.getSize().x/2.3, window.getSize().y/2.5);
+  ghost->initialiseSprite(pink_ghost_texture, R"(E:\Learning Projects\PacmanSFML\Data\Images\PinkGhost.png)");
+  ghost->getSprite()->setPosition(window.getSize().x/2.3, window.getSize().y/2.5);
+  ghost->getSprite()->setScale(0.025f, 0.025f);
+
   player->playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2);
 
   if (!game_font.loadFromFile("Data/Fonts/OpenSans-Italic.ttf"))
@@ -127,13 +130,13 @@ void Game::render()
           }
         }
         window.draw(player->playerSprite);
-        window.draw(ghost->ghostSprite);
+        window.draw(*ghost->getSprite());
         score_text.setString("SCORE: " + std::to_string(score));
         window.draw(score_text);
       break;
     case PAUSE_SCREEN:
       window.draw(player->playerSprite);
-      window.draw(ghost->ghostSprite);
+      window.draw(*ghost->getSprite());
       //range based for loop
       for(int i = 0; i < 23; ++i)
       {

@@ -11,7 +11,7 @@
 #include "tmxlite/TileLayer.hpp"//multipled "multiple definition" errors on home pc, clueless as to why.
 #include <vector>
 #include "TileHandler.h"
-#include "math.h"
+#include <cmath>
 #include "GhostHandler.h"
 
 class Game
@@ -63,6 +63,8 @@ class Game
 
   sf::Text score_text;
   sf::Font game_font;
+
+  sf::Texture pink_ghost_texture;
 };
 
 #endif // PLATFORMER_GAME_H
