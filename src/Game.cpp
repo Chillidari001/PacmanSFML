@@ -52,7 +52,8 @@ void Game::collisionHandler()
           if(player->playerMovementState == Player::MOVE_LEFT)
           {
             player->playerBlockState = Player::BLOCK_LEFT;
-//            player->playerSprite.setPosition(tileHandler->tilesSprites[a][b].GetSprite()->getPosition() + tileHandler->tilesSprites[a][b].GetSprite()->getTexture()->getSize().x)
+//            player->playerSprite.setPosition(tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x + tileHandler->tilesSprites[a][b].GetSprite()->getTexture()->getSize().x,
+//                                             tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y + tileHandler->tilesSprites[a][b].GetSprite()->getTexture()->getSize().y);
           }
           if(player->playerMovementState == Player::MOVE_RIGHT)
           {
@@ -78,7 +79,7 @@ void Game::collisionHandler()
           }
         }
       }
-      if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()) == false & player->playerBlockState != Player::BLOCK_NONE)
+      if(player->playerSprite.getGlobalBounds().intersects(tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()) == false && player->playerBlockState != Player::BLOCK_NONE)
       {
         std::cout << "NOT COLLIDING" << "\n";
         player->playerBlockState = Player::BLOCK_NONE;
