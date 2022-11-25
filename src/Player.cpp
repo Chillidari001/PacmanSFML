@@ -90,10 +90,23 @@ void Player::playerBlockUpdate()
       }
       break;
     case BLOCK_RIGHT:
+      if(playerMovementState == MOVE_RIGHT)
+      {
+        playerMovementState = MOVE_STATIONARY;
+      }
       break;
     case BLOCK_UP:
+      if(playerMovementState == MOVE_UP)
+      {
+        playerMovementState = MOVE_STATIONARY;
+      }
       break;
     case BLOCK_DOWN:
+      if(playerMovementState == MOVE_DOWN)
+      {
+        playerMovementState = MOVE_STATIONARY;
+      }
+      break;
       break;
     case BLOCK_NONE:
       break;

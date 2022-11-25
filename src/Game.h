@@ -37,12 +37,15 @@ class Game
   std::unique_ptr<Menu> menu;
   std::unique_ptr<TileHandler> tileHandler;
   std::unique_ptr<GhostHandler> ghost;
+  std::unique_ptr<GhostHandler> ghost2;
 
-  int menu_selected = 1;
+  sf::Texture pink_ghost_texture;
+  sf::Texture blue_ghost_texture;
 
   sf::Texture tileMap;
   tmx::Map map;
-  std::vector<sf::Sprite> tilesSprites[30][40];
+
+  int menu_selected = 1;
 
   enum gameScreen
   {
@@ -67,8 +70,6 @@ class Game
 
   sf::Text score_text;
   sf::Font game_font;
-
-  sf::Texture pink_ghost_texture;
 };
 
 #endif // PLATFORMER_GAME_H

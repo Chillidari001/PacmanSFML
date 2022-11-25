@@ -6,12 +6,12 @@
 TileHandler::TileHandler(sf::RenderWindow& window) : window(window)
 {
   //if statement loads spritesheet used in tiled and checks if it loads
-  if(!tileMap.loadFromFile(R"(E:\Learning Projects\PacmanSFML\Data\tileAssets\kennytileset.png)"))
+  if(!tileMap.loadFromFile(R"(H:\Personal\C++\PacmanSFML\Data\tileAssets\kennytileset.png)"))
   {
     std::cout << "FAILED TO LOAD TILEMAP" << std::endl;
   }
   //if statement loads tilemap generated from tiled and checks if loaded
-  if(!map.load(R"(E:\Learning Projects\PacmanSFML\Data\tileAssets\kennyMap2.tmx)"))
+  if(!map.load(R"(H:\Personal\C++\PacmanSFML\Data\tileAssets\kennyMap2.tmx)"))
   {
     std::cout << "FAILED TO LOAD TMX MAP" << std::endl;
   }
