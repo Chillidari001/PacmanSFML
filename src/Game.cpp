@@ -104,14 +104,10 @@ void Game::collisionHandler()
         if (player->playerSprite.getGlobalBounds().intersects(
               tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
         {
-          if (player->playerSprite.getGlobalBounds().intersects(
-                tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
-          {
             // std::cout << "COLLIDED WITH COIN" << "\n";
             tileHandler->tilesSprites[a][b].GetSprite()->setTextureRect(
               sf::IntRect(0, 0, 0, 0));
             score++;
-          }
         }
       }
     }
