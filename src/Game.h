@@ -40,6 +40,10 @@ class Game
 
   int menu_selected = 1;
 
+  sf::Texture tileMap;
+  tmx::Map map;
+  std::vector<sf::Sprite> tilesSprites[30][40];
+
   enum gameScreen
   {
     MENU_SCREEN,
