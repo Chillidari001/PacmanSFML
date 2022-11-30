@@ -26,7 +26,11 @@ class Game
   void keyPressed(sf::Event event);
 
   void collisionHandler();
+  bool ghostCollisionHandler();
 
+  sf::Clock inputTimer;
+
+  bool ghost_collided = false;
 
  private:
   sf::RenderWindow& window;
@@ -38,6 +42,8 @@ class Game
   std::unique_ptr<TileHandler> tileHandler;
   std::unique_ptr<GhostHandler> ghost;
   std::unique_ptr<GhostHandler> ghost2;
+  std::unique_ptr<GhostHandler> ghost3;
+  std::unique_ptr<GhostHandler> ghost4;
 
   sf::Texture pink_ghost_texture;
   sf::Texture blue_ghost_texture;
@@ -69,6 +75,7 @@ class Game
   int score = 0;
 
   sf::Text score_text;
+  sf::Text score_text_int;
   sf::Font game_font;
 };
 

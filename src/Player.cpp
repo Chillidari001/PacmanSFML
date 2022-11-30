@@ -27,23 +27,39 @@ Player::~Player()
 
 }
 
-void Player::playerInput()
+void Player::playerInput(sf::Clock timer)
 {
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
   {
-    playerMovementState = playerMovement::MOVE_LEFT;
+    sf::Time inputCooldown = timer.restart();
+    if(inputCooldown > sf::seconds(1))
+    {
+      playerMovementState = playerMovement::MOVE_LEFT;
+    }
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
   {
-    playerMovementState = playerMovement::MOVE_RIGHT;
+    sf::Time inputCooldown = timer.restart();
+    if(inputCooldown > sf::seconds(1))
+    {
+      playerMovementState = playerMovement::MOVE_RIGHT;
+    }
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
   {
-    playerMovementState = playerMovement::MOVE_UP;
+    sf::Time inputCooldown = timer.restart();
+    if(inputCooldown > sf::seconds(1))
+    {
+      playerMovementState = playerMovement::MOVE_UP;
+    }
   }
   if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
   {
-    playerMovementState = playerMovement::MOVE_DOWN;
+    sf::Time inputCooldown = timer.restart();
+    if(inputCooldown > sf::seconds(1))
+    {
+      playerMovementState = playerMovement::MOVE_DOWN;
+    }
   }
 }
 
@@ -52,27 +68,37 @@ void Player::playerMovement()
   switch(playerMovementState)
   {
     case MOVE_LEFT:
-      playerSprite.move(-1.5f,0.f);
+      speed_x = -1.5f;
+      speed_y = 0.0f;
+      playerSprite.move(speed_x,speed_y);
       playerSprite.setRotation(180.0f);
       //std::cout << "Player move left" << std::endl;
       break;
     case MOVE_RIGHT:
-      playerSprite.move(1.5f,0.f);
+      speed_x = 1.5f;
+      speed_y = 0.0f;
+      playerSprite.move(speed_x,speed_y);
       playerSprite.setRotation(0.f);
       //std::cout << "Player move right" << std::endl;
       break;
     case MOVE_UP:
-      playerSprite.move(0.f,-1.5f);
+      speed_x = 0.0f;
+      speed_y = -1.5f;
+      playerSprite.move(speed_x,speed_y);
       playerSprite.setRotation(-90.f);
       //std::cout << "Player move up" << std::endl;
       break;
     case MOVE_DOWN:
-      playerSprite.move(0.f,1.5f);
+      speed_x = 0.0f;
+      speed_y = 1.5f;
+      playerSprite.move(speed_x,speed_y);
       playerSprite.setRotation(90.f);
       //std::cout << "Player move down" << std::endl;
       break;
     case MOVE_STATIONARY:
-      playerSprite.move(0.f,0.f);
+      speed_x = 0.0f;
+      speed_y = 0.0f;
+      playerSprite.move(speed_x,speed_y);
       //std::cout << "Player stationary" << std::endl;
       break;
   }

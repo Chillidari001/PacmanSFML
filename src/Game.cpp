@@ -20,11 +20,11 @@ bool Game::init()
   ghost = std::make_unique<GhostHandler>();
   ghost2 = std::make_unique<GhostHandler>();
 
-  ghost->initialiseSprite(pink_ghost_texture, R"(H:\Personal\C++\PacmanSFML\Data\Images\PinkGhost.png)");
-  ghost->getSprite()->setPosition(window.getSize().x/2.3, window.getSize().y/2.5);
+  ghost->initialiseSprite(pink_ghost_texture, R"(E:\Learning Projects\PacmanSFML\Data\Images\PinkGhost.png)");
+  ghost->getSprite()->setPosition(window.getSize().x/1.7, window.getSize().y/2.5);
   ghost->getSprite()->setScale(0.025f, 0.025f);
 
-  ghost2->initialiseSprite(blue_ghost_texture, R"(H:\Personal\C++\PacmanSFML\Data\Images\BlueGhost.png)");
+  ghost2->initialiseSprite(blue_ghost_texture, R"(E:\Learning Projects\PacmanSFML\Data\Images\BlueGhost.png)");
   ghost2->getSprite()->setPosition(window.getSize().x/2.2, window.getSize().y/2.5);
   ghost2->getSprite()->setScale(0.025f, 0.025f);
 
@@ -38,7 +38,14 @@ bool Game::init()
   score_text.setFont(game_font);
   score_text.setCharacterSize(30);
   score_text.setFillColor(sf::Color::White);
-  score_text.setPosition(0 + score_text.getGlobalBounds().width/2, 0 + score_text.getGlobalBounds().height*6);
+  score_text.setPosition(0, 0);
+
+  score_text_int.setFont(game_font);
+  score_text_int.setCharacterSize(30);
+  score_text_int.setFillColor(sf::Color::White);
+  score_text_int.setPosition(0, 30);
+
+  score = 0;
 
   return true;
 }
@@ -49,15 +56,15 @@ void Game::collisionHandler()
   {
     for (int b = 0; b < 21; ++b)
     {
-      float distance = sqrt(
-        powf(
-          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x -
-            player->playerSprite.getPosition().x,
-          2) *
-        powf(
-          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y -
-            player->playerSprite.getPosition().y,
-          2));
+//      float distance = sqrt(
+//        powf(
+//          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x -
+//            player->playerSprite.getPosition().x,
+//          2) *
+//        powf(
+//          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y -
+//            player->playerSprite.getPosition().y,
+//          2));
 
       if (tileHandler->tilesSprites[a][b].tileID == 394)
       {
@@ -65,35 +72,21 @@ void Game::collisionHandler()
               tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
         {
           // std::cout << "COLLIDED WITH WALL" << "\n";
-          if (player->playerMovementState == Player::MOVE_LEFT)
+          if(player->speed_x < 0 && player->speed_y == 0)
           {
-            player->playerBlockState = Player::BLOCK_LEFT;
-            //            player->playerSprite.setPosition(tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x + tileHandler->tilesSprites[a][b].GetSprite()->getTexture()->getSize().x,
-            //                                             tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y);
+            player->playerSprite.move(2.0f, 0.0f);
           }
-          if (player->playerMovementState == Player::MOVE_RIGHT)
+          if(player->speed_x > 0 && player->speed_y == 0)
           {
-            player->playerBlockState = Player::BLOCK_RIGHT;
+            player->playerSprite.move(-2.0f, 0.0f);
           }
-          if (player->playerMovementState == Player::MOVE_UP)
+          if(player->speed_y < 0 && player->speed_x == 0)
           {
-            player->playerBlockState = Player::BLOCK_UP;
+            player->playerSprite.move(0.0f, 2.0f);
           }
-          if (player->playerMovementState == Player::MOVE_DOWN)
+          if(player->speed_y > 0 && player->speed_x == 0)
           {
-            player->playerBlockState = Player::BLOCK_DOWN;
-          }
-        }
-        if (
-          !player->playerSprite.getGlobalBounds().intersects(
-            tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()) &&
-          player->playerBlockState != Player::BLOCK_NONE)
-        {
-          if(distance < 50)
-          {
-            std::cout << "NOT COLLIDING"
-                      << "\n";
-            player->playerBlockState = Player::BLOCK_NONE;
+            player->playerSprite.move(0.0f, -2.0f);
           }
         }
 //        std::cout << player->playerBlockState;
@@ -107,7 +100,43 @@ void Game::collisionHandler()
             // std::cout << "COLLIDED WITH COIN" << "\n";
             tileHandler->tilesSprites[a][b].GetSprite()->setTextureRect(
               sf::IntRect(0, 0, 0, 0));
-            score++;
+            score = score + 10;
+        }
+      }
+    }
+  }
+}
+
+bool Game::ghostCollisionHandler()
+{
+  for (int a = 0; a < 23; ++a)
+  {
+    for (int b = 0; b < 21; ++b)
+    {
+      float distance = sqrt(
+        powf(
+          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().x -
+            ghost->getSprite()->getPosition().x,
+          2) *
+        powf(
+          tileHandler->tilesSprites[a][b].GetSprite()->getPosition().y -
+            ghost->getSprite()->getPosition().y,
+          2));
+
+      if (tileHandler->tilesSprites[a][b].tileID == 394)
+      {
+        if(distance < 150)
+        {
+          if (ghost->getSprite()->getGlobalBounds().intersects(
+                tileHandler->tilesSprites[a][b].GetSprite()->getGlobalBounds()))
+          {
+            std::cout << "ghost collision";
+            return ghost_collided = true;
+          }
+          else
+          {
+            return ghost_collided = false;
+          }
         }
       }
     }
@@ -120,8 +149,14 @@ void Game::update(float dt)
   {
     case GAME_SCREEN:
       collisionHandler();
+      ghostCollisionHandler();
+      ghost->ghostStateChange();
+      ghost2->ghostStateChange();
+      ghost->ghostStateHandler(player->playerSprite.getPosition().x, player->playerSprite.getPosition().y, 1, ghost_collided);
+      ghost2->ghostStateHandler(player->playerSprite.getPosition().x, player->playerSprite.getPosition().y, 2, ghost_collided);
       ghost->ghostMovement();
-      player->playerInput();
+      ghost2->ghostMovement();
+      player->playerInput(inputTimer);
       player->playerBlockUpdate();
       player->playerMovement();
       break;
@@ -154,8 +189,10 @@ void Game::render()
         window.draw(player->playerSprite);
         window.draw(*ghost->getSprite());
         window.draw(*ghost2->getSprite());
-        score_text.setString("SCORE: " + std::to_string(score));
+        score_text.setString("SCORE: ");
+        score_text_int.setString(std::to_string(score));
         window.draw(score_text);
+        window.draw(score_text_int);
       break;
     case PAUSE_SCREEN:
       window.draw(player->playerSprite);
@@ -170,6 +207,7 @@ void Game::render()
         }
       }
       window.draw(score_text);
+      window.draw(score_text_int);
   }
 }
 
@@ -223,7 +261,6 @@ void Game::keyPressed(sf::Event event)
       game_state = gameScreen::MENU_SCREEN;
     }
 
-    player->playerInput();
   }
   if(game_state == gameScreen::GAME_SCREEN || game_state == gameScreen::PAUSE_SCREEN)
   {

@@ -13,8 +13,10 @@ class Player
   Player();
   ~Player();
   void playerMovement();
-  void playerInput();
+  void playerInput(sf::Clock timer);
   sf::Sprite playerSprite;
+  int speed_x= 0;
+  int speed_y = 0;
 
   enum playerMovement
   {
