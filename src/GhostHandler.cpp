@@ -59,18 +59,24 @@ void GhostHandler::ghostMovement()
       }
       break;
     case MOVE_RIGHT:
-      ghost_speed_x = 1.5f;
-      ghost_speed_y = 0.0f;
-      sprite->move(ghost_speed_x,ghost_speed_y);
-//      sprite->setRotation(0.f);
-      //std::cout << "Player move right" << std::endl;
+      if(block_right == false)
+      {
+        ghost_speed_x = 1.5f;
+        ghost_speed_y = 0.0f;
+        sprite->move(ghost_speed_x,ghost_speed_y);
+        //      sprite->setRotation(0.f);
+        //std::cout << "Player move right" << std::endl;
+      }
       break;
     case MOVE_UP:
-      ghost_speed_x = 0.0f;
-      ghost_speed_y = -1.5f;
-      sprite->move(ghost_speed_x,ghost_speed_y);
-//      sprite->setRotation(-90.f);
-      //std::cout << "Player move up" << std::endl;
+      if(block_up == false)
+      {
+        ghost_speed_x = 0.0f;
+        ghost_speed_y = -1.5f;
+        sprite->move(ghost_speed_x,ghost_speed_y);
+        //      sprite->setRotation(-90.f);
+        //std::cout << "Player move up" << std::endl;
+      }
       break;
     case MOVE_DOWN:
       if(block_down == false)
@@ -132,12 +138,13 @@ void GhostHandler::initialMovement()
 //of pure rng maybe?
 void GhostHandler::blockHandler(bool collided)
 {
-  if(collided && ghostMovementState == GhostHandler::MOVE_LEFT)
+  if(collided && ghostMovementState == GhostHandler::MOVE_LEFT && ghost_speed_y == 0)
   {
     sf::Clock block_timer;
     block_timer.restart();
     block_left = true;
     int randBlockNum = (rand() % 3) + 1;
+    sprite->move(4, 0);
     if(randBlockNum == 1)
     {
       ghostMovementState = GhostHandler::MOVE_RIGHT;
@@ -154,18 +161,77 @@ void GhostHandler::blockHandler(bool collided)
     }
 
     sf::Time block_timer_elapsed = block_timer.restart();
-    if(block_timer_elapsed.asSeconds() >= 1)
+    if(block_timer_elapsed.asMilliseconds() >= 0.5)
     {
       block_left = false;
     }
   }
 
-  if(collided && ghostMovementState == GhostHandler::MOVE_DOWN)
+  if(collided && ghostMovementState == GhostHandler::MOVE_RIGHT && ghost_speed_y == 0)
   {
     sf::Clock block_timer;
     block_timer.restart();
-    block_down       = true;
+    block_right = true;
     int randBlockNum = (rand() % 3) + 1;
+    sprite->move(-4, 0);
+    if(randBlockNum == 1)
+    {
+      ghostMovementState = GhostHandler::MOVE_LEFT;
+    }
+
+    if(randBlockNum == 2)
+    {
+      ghostMovementState = GhostHandler::MOVE_UP;
+    }
+
+    if(randBlockNum == 3)
+    {
+      ghostMovementState = GhostHandler::MOVE_DOWN;
+    }
+
+    sf::Time block_timer_elapsed = block_timer.restart();
+    if(block_timer_elapsed.asMilliseconds() >= 0.5)
+    {
+      block_right = false;
+    }
+  }
+
+  if(collided && ghostMovementState == GhostHandler::MOVE_UP && ghost_speed_x == 0)
+  {
+    sf::Clock block_timer;
+    block_timer.restart();
+    block_up = true;
+    int randBlockNum = (rand() % 3) + 1;
+    sprite->move(0, 4);
+    if (randBlockNum == 1)
+    {
+      ghostMovementState = GhostHandler::MOVE_DOWN;
+    }
+
+    if (randBlockNum == 2)
+    {
+      ghostMovementState = GhostHandler::MOVE_LEFT;
+    }
+
+    if (randBlockNum == 3)
+    {
+      ghostMovementState = GhostHandler::MOVE_RIGHT;
+    }
+
+    sf::Time block_timer_elapsed = block_timer.restart();
+    if (block_timer_elapsed.asMilliseconds() >= 0.5)
+    {
+      block_up = false;
+    }
+  }
+
+  if(collided && ghostMovementState == GhostHandler::MOVE_DOWN && ghost_speed_x == 0)
+  {
+    sf::Clock block_timer;
+    block_timer.restart();
+    block_down = true;
+    int randBlockNum = (rand() % 3) + 1;
+    sprite->move(0, -4);
     if (randBlockNum == 1)
     {
       ghostMovementState = GhostHandler::MOVE_UP;
@@ -182,11 +248,12 @@ void GhostHandler::blockHandler(bool collided)
     }
 
     sf::Time block_timer_elapsed = block_timer.restart();
-    if (block_timer_elapsed.asSeconds() >= 1)
+    if (block_timer_elapsed.asMilliseconds() >= 0.5)
     {
       block_down = false;
     }
   }
+  std::cout << block_left;
 }
 
 //first movement pattern for one of the ghost, plan is to have different patterns for each ghost to mimic the original
