@@ -20,6 +20,7 @@ class Game
   Game(sf::RenderWindow& window);
   ~Game();
   bool init();
+  bool gameInit();
   void update(float dt);
   void render();
   void mouseClicked(sf::Event event);
@@ -27,6 +28,10 @@ class Game
 
   void collisionHandler();
   bool ghostCollisionHandler();
+
+  void stateManager();
+
+  void playerStateManager();
 
   sf::Clock inputTimer;
 
@@ -47,6 +52,8 @@ class Game
 
   sf::Texture pink_ghost_texture;
   sf::Texture blue_ghost_texture;
+  sf::Texture orange_ghost_texture;
+  sf::Texture green_ghost_texture;
 
   sf::Texture tileMap;
   tmx::Map map;
@@ -74,9 +81,30 @@ class Game
   bool paused = false;
   int score = 0;
 
+//  int max_score = 870;
+  int pellets_collected = 0; //target = 87
+
+  int current_level = 1;
+
+  int lives = 3;
+
+  bool powered = false;
+
+  sf::Sprite fruitSprite;
+  sf::Sprite fruitSprite2;
+  sf::Texture fruitTexture;
+
   sf::Text score_text;
   sf::Text score_text_int;
+  sf::Text lives_text;
+  sf::Text lives_text_int;
+  sf::Text lose_text;
+  sf::Text retry_text;
+  sf::Text win_text;
+  sf::Text completion_score_text;
   sf::Font game_font;
+
+  sf::Clock powered_timer;
 };
 
 #endif // PLATFORMER_GAME_H

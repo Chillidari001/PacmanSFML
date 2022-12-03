@@ -103,7 +103,7 @@ TileHandler::TileHandler(sf::RenderWindow& window) : window(window)
     {
       case 394:
       {
-        tilesSprites[idx][idy].GetSprite()->setTextureRect(sf::IntRect(160, 60, 20, 20));
+        tilesSprites[idx][idy].GetSprite()->setTextureRect(sf::IntRect(180, 60, 20, 20));
         break;
       }
 

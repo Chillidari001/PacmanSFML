@@ -51,7 +51,7 @@ void GhostHandler::ghostMovement()
     case MOVE_LEFT:
       if(block_left == false)
       {
-        ghost_speed_x = -1.5f;
+        ghost_speed_x = -1.0f;
         ghost_speed_y = 0.0f;
         sprite->move(ghost_speed_x,ghost_speed_y);
         //      sprite->setRotation(180.0f);
@@ -61,7 +61,7 @@ void GhostHandler::ghostMovement()
     case MOVE_RIGHT:
       if(block_right == false)
       {
-        ghost_speed_x = 1.5f;
+        ghost_speed_x = 1.0f;
         ghost_speed_y = 0.0f;
         sprite->move(ghost_speed_x,ghost_speed_y);
         //      sprite->setRotation(0.f);
@@ -72,7 +72,7 @@ void GhostHandler::ghostMovement()
       if(block_up == false)
       {
         ghost_speed_x = 0.0f;
-        ghost_speed_y = -1.5f;
+        ghost_speed_y = -1.0f;
         sprite->move(ghost_speed_x,ghost_speed_y);
         //      sprite->setRotation(-90.f);
         //std::cout << "Player move up" << std::endl;
@@ -82,7 +82,7 @@ void GhostHandler::ghostMovement()
       if(block_down == false)
       {
         ghost_speed_x = 0.0f;
-        ghost_speed_y = 1.5f;
+        ghost_speed_y = 1.0f;
         sprite->move(ghost_speed_x,ghost_speed_y);
         //      sprite->setRotation(90.f);
         //std::cout << "Player move down" << std::endl;
@@ -98,219 +98,262 @@ void GhostHandler::ghostMovement()
   //std::cout << std::to_string(playerSprite.getLocalBounds());
 }
 
-void GhostHandler::initialMovement()
+//void GhostHandler::initialMovement()
+//{
+//  if(initial_x)
+//  {
+//    if(sprite->getPosition().x < 548)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_RIGHT;
+//    }
+//    if(sprite->getPosition().x > 552)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_LEFT;
+//    }
+//    if(sprite->getPosition().x >= 549 && sprite->getPosition().x <= 551)
+//    {
+//      initial_x = false;
+//      initial_y = true;
+//    }
+//  }
+//
+//  if(initial_y)
+//  {
+//    ghostMovementState = GhostHandler::MOVE_UP;
+//    if(sprite->getPosition().y >= 180 && sprite->getPosition().y <= 189)
+//    {
+//      initial_y = false;
+//      ghostMovementState = GhostHandler::MOVE_STATIONARY;
+//    }
+//  }
+//
+//  if(initial_x == false && initial_y == false)
+//  {
+//    initial_complete = true;
+//  }
+//}
+//
+//int GhostHandler::randomNumGen(int a, int b)
+//{
+//  std::random_device seed;
+//  std::mt19937 gen{seed()}; // seed the generator
+//  std::uniform_int_distribution dist{a, b}; // set min and max
+//  int guess = dist(gen); // generate number
+//
+//  return guess;
+//}
+//
+////handles the blocking of each movement state if collided in and makes ghost choose another randomly.
+////helps handle the AI without the I. PLan to have direction chosen dependent on certain conditions instead
+////of pure rng maybe?
+//void GhostHandler::blockHandler(bool collided)
+//{
+//  if(collided && ghostMovementState == GhostHandler::MOVE_LEFT && ghost_speed_y == 0)
+//  {
+//    block_left = true;
+//    ghostMovementState = GhostHandler::MOVE_STATIONARY;
+//    sf::Clock block_timer;
+//    sprite->move(4, 0);
+//    if(randomNumGen(1, 3) == 1)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_RIGHT;
+//    }
+//
+//    if(randomNumGen(1, 3) == 2)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_UP;
+//    }
+//
+//    if(randomNumGen(1, 3) == 3)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_DOWN;
+//    }
+//
+//    sf::Time block_timer_elapsed = block_timer.restart();
+//    if(block_timer_elapsed.asMilliseconds() >= 0.5)
+//    {
+//      block_left = false;
+//    }
+//  }
+//
+//  if(collided && ghostMovementState == GhostHandler::MOVE_RIGHT && ghost_speed_y == 0)
+//  {
+//    block_right = true;
+//    ghostMovementState = GhostHandler::MOVE_STATIONARY;
+//    sf::Clock block_timer;
+//    sprite->move(-4, 0);
+//    if(randomNumGen(1, 3) == 1)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_LEFT;
+//    }
+//
+//    if(randomNumGen(1, 3) == 2)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_UP;
+//    }
+//
+//    if(randomNumGen(1, 3) == 3)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_DOWN;
+//    }
+//
+//    sf::Time block_timer_elapsed = block_timer.restart();
+//    if(block_timer_elapsed.asMilliseconds() >= 0.5)
+//    {
+//      block_right = false;
+//    }
+//  }
+//
+//  if(collided && ghostMovementState == GhostHandler::MOVE_UP && ghost_speed_x == 0)
+//  {
+//    block_up = true;
+//    ghostMovementState = GhostHandler::MOVE_STATIONARY;
+//    sf::Clock block_timer;
+//    sprite->move(0, 4);
+//    if (randomNumGen(1, 3) == 1)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_DOWN;
+//    }
+//
+//    if (randomNumGen(1, 3) == 2)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_LEFT;
+//    }
+//
+//    if (randomNumGen(1, 3) == 3)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_RIGHT;
+//    }
+//
+//    sf::Time block_timer_elapsed = block_timer.restart();
+//    if (block_timer_elapsed.asMilliseconds() >= 0.5)
+//    {
+//      block_up = false;
+//    }
+//  }
+//
+//  if(collided && ghostMovementState == GhostHandler::MOVE_DOWN && ghost_speed_x == 0)
+//  {
+//    block_down = true;
+//    ghostMovementState = GhostHandler::MOVE_STATIONARY;
+//    sf::Clock block_timer;
+//    sprite->move(0, -4);
+//    if (randomNumGen(1, 3) == 1)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_UP;
+//    }
+//
+//    if (randomNumGen(1, 3) == 2)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_LEFT;
+//    }
+//
+//    if (randomNumGen(1, 3) == 3)
+//    {
+//      ghostMovementState = GhostHandler::MOVE_RIGHT;
+//    }
+//
+//    sf::Time block_timer_elapsed = block_timer.restart();
+//    if (block_timer_elapsed.asMilliseconds() >= 0.5)
+//    {
+//      block_down = false;
+//    }
+//  }
+//  std::cout << block_left;
+//}
+//
+////first movement pattern for one of the ghost, plan is to have different patterns for each ghost to mimic the original
+////pacman which gave each ghost a different target and such to add extra personality and difficulty.
+//void GhostHandler::ghostMovementPattern1(int player_x, int player_y, bool collided)
+//{
+//  blockHandler(collided);
+////  std::cout << sprite->getPosition().x << " " << sprite->getPosition().y << "\n";
+//float distance_x = sqrt(
+//        powf(
+//          player_x -
+//            sprite->getPosition().x,
+//          2));
+//float distance_y = sqrt(
+//          powf(
+//            player_y -
+//              sprite->getPosition().y,
+//            2));
+//
+//  if (initial_complete == false)
+//  {
+//    initialMovement();
+//  }
+//  else
+//  {
+//    if(distance_x > distance_y)
+//    {
+//      std::cout << "X" << "\n";
+//      if(player_x > sprite->getPosition().x)
+//      {
+//        ghostMovementState = GhostHandler::MOVE_RIGHT;
+//      }
+//      if(player_x < sprite->getPosition().x)
+//      {
+//        ghostMovementState = GhostHandler::MOVE_LEFT;
+//      }
+//    }
+//
+//    if(distance_y > distance_x)
+//    {
+//      std::cout << "Y" << "\n";
+//      if(player_y > sprite->getPosition().y)
+//      {
+//        ghostMovementState = GhostHandler::MOVE_DOWN;
+//      }
+//      if(player_y < sprite->getPosition().y)
+//      {
+//        ghostMovementState = GhostHandler::MOVE_UP;
+//      }
+//    }
+//  }
+//
+////  std::cout << ghostMovementState;
+////  std::cout << initial_x;
+////  std::cout << sprite->getPosition().x << "\n";
+////  std::cout << initial_y;
+////  std::cout << sprite->getPosition().y << "\n";
+//}
+
+void GhostHandler::basicMovement(int ghost_num)
 {
-  if(initial_x)
+  float movementCheck = movementTime.getElapsedTime().asSeconds();
+//  std::cout << movementCheck << "\n";
+//  std::cout << ghostMovementState << "\n";
+  if(ghost_num == 1)
   {
-    if(sprite->getPosition().x < 548)
+    if(movementCheck < 1.5)
     {
       ghostMovementState = GhostHandler::MOVE_RIGHT;
     }
-    if(sprite->getPosition().x > 552)
+    if(movementCheck > 1.5)
     {
       ghostMovementState = GhostHandler::MOVE_LEFT;
     }
-    if(sprite->getPosition().x >= 549 && sprite->getPosition().x <= 551)
+    if(movementCheck >= 3)
     {
-      initial_x = false;
-      initial_y = true;
+      movementTime.restart();
     }
   }
-
-  if(initial_y)
+  if(ghost_num == 2)
   {
-    ghostMovementState = GhostHandler::MOVE_UP;
-    if(sprite->getPosition().y >= 180 && sprite->getPosition().y <= 189)
+    if(movementCheck < 1.5)
     {
-      initial_y = false;
-      ghostMovementState = GhostHandler::MOVE_STATIONARY;
+      ghostMovementState = GhostHandler::MOVE_LEFT;
     }
-  }
-
-  if(initial_x == false && initial_y == false)
-  {
-    initial_complete = true;
-  }
-}
-
-//handles the blocking of each movement state if collided in and makes ghost choose another randomly.
-//helps handle the AI without the I. PLan to have direction chosen dependent on certain conditions instead
-//of pure rng maybe?
-void GhostHandler::blockHandler(bool collided)
-{
-  if(collided && ghostMovementState == GhostHandler::MOVE_LEFT && ghost_speed_y == 0)
-  {
-    sf::Clock block_timer;
-    block_timer.restart();
-    block_left = true;
-    int randBlockNum = (rand() % 3) + 1;
-    sprite->move(4, 0);
-    if(randBlockNum == 1)
+    if(movementCheck > 1.5)
     {
       ghostMovementState = GhostHandler::MOVE_RIGHT;
     }
-
-    if(randBlockNum == 2)
+    if(movementCheck >= 3)
     {
-      ghostMovementState = GhostHandler::MOVE_UP;
-    }
-
-    if(randBlockNum == 3)
-    {
-      ghostMovementState = GhostHandler::MOVE_DOWN;
-    }
-
-    sf::Time block_timer_elapsed = block_timer.restart();
-    if(block_timer_elapsed.asMilliseconds() >= 0.5)
-    {
-      block_left = false;
+      movementTime.restart();
     }
   }
-
-  if(collided && ghostMovementState == GhostHandler::MOVE_RIGHT && ghost_speed_y == 0)
-  {
-    sf::Clock block_timer;
-    block_timer.restart();
-    block_right = true;
-    int randBlockNum = (rand() % 3) + 1;
-    sprite->move(-4, 0);
-    if(randBlockNum == 1)
-    {
-      ghostMovementState = GhostHandler::MOVE_LEFT;
-    }
-
-    if(randBlockNum == 2)
-    {
-      ghostMovementState = GhostHandler::MOVE_UP;
-    }
-
-    if(randBlockNum == 3)
-    {
-      ghostMovementState = GhostHandler::MOVE_DOWN;
-    }
-
-    sf::Time block_timer_elapsed = block_timer.restart();
-    if(block_timer_elapsed.asMilliseconds() >= 0.5)
-    {
-      block_right = false;
-    }
-  }
-
-  if(collided && ghostMovementState == GhostHandler::MOVE_UP && ghost_speed_x == 0)
-  {
-    sf::Clock block_timer;
-    block_timer.restart();
-    block_up = true;
-    int randBlockNum = (rand() % 3) + 1;
-    sprite->move(0, 4);
-    if (randBlockNum == 1)
-    {
-      ghostMovementState = GhostHandler::MOVE_DOWN;
-    }
-
-    if (randBlockNum == 2)
-    {
-      ghostMovementState = GhostHandler::MOVE_LEFT;
-    }
-
-    if (randBlockNum == 3)
-    {
-      ghostMovementState = GhostHandler::MOVE_RIGHT;
-    }
-
-    sf::Time block_timer_elapsed = block_timer.restart();
-    if (block_timer_elapsed.asMilliseconds() >= 0.5)
-    {
-      block_up = false;
-    }
-  }
-
-  if(collided && ghostMovementState == GhostHandler::MOVE_DOWN && ghost_speed_x == 0)
-  {
-    sf::Clock block_timer;
-    block_timer.restart();
-    block_down = true;
-    int randBlockNum = (rand() % 3) + 1;
-    sprite->move(0, -4);
-    if (randBlockNum == 1)
-    {
-      ghostMovementState = GhostHandler::MOVE_UP;
-    }
-
-    if (randBlockNum == 2)
-    {
-      ghostMovementState = GhostHandler::MOVE_LEFT;
-    }
-
-    if (randBlockNum == 3)
-    {
-      ghostMovementState = GhostHandler::MOVE_RIGHT;
-    }
-
-    sf::Time block_timer_elapsed = block_timer.restart();
-    if (block_timer_elapsed.asMilliseconds() >= 0.5)
-    {
-      block_down = false;
-    }
-  }
-  std::cout << block_left;
-}
-
-//first movement pattern for one of the ghost, plan is to have different patterns for each ghost to mimic the original
-//pacman which gave each ghost a different target and such to add extra personality and difficulty.
-void GhostHandler::ghostMovementPattern1(int player_x, int player_y, bool collided)
-{
-  blockHandler(collided);
-//  std::cout << sprite->getPosition().x << " " << sprite->getPosition().y << "\n";
-float distance_x = sqrt(
-        powf(
-          player_x -
-            sprite->getPosition().x,
-          2));
-float distance_y= sqrt(
-          powf(
-            player_y -
-              sprite->getPosition().y,
-            2));
-
-  if (initial_complete == false)
-  {
-    initialMovement();
-  }
-  else
-  {
-    if(distance_x > distance_y)
-    {
-      std::cout << "X" << "\n";
-      if(player_x > sprite->getPosition().x)
-      {
-        ghostMovementState = GhostHandler::MOVE_RIGHT;
-      }
-      if(player_x < sprite->getPosition().x)
-      {
-        ghostMovementState = GhostHandler::MOVE_LEFT;
-      }
-    }
-
-    if(distance_y > distance_x)
-    {
-      std::cout << "Y" << "\n";
-      if(player_y > sprite->getPosition().y)
-      {
-        ghostMovementState = GhostHandler::MOVE_DOWN;
-      }
-      if(player_y < sprite->getPosition().y)
-      {
-        ghostMovementState = GhostHandler::MOVE_UP;
-      }
-    }
-  }
-
-//  std::cout << ghostMovementState;
-//  std::cout << initial_x;
-//  std::cout << sprite->getPosition().x << "\n";
-//  std::cout << initial_y;
-//  std::cout << sprite->getPosition().y << "\n";
 }
 
 void GhostHandler::ghostStateHandler(int player_x, int player_y, int ghost_num, bool collided)
@@ -321,10 +364,7 @@ void GhostHandler::ghostStateHandler(int player_x, int player_y, int ghost_num, 
       //std::cout << "Ghost Sleeping" << "\n";
       break;
     case CHASE:
-      if(ghost_num == 1)
-      {
-        ghostMovementPattern1(player_x, player_y, collided);
-      }
+      basicMovement(ghost_num);
       break;
     case SCATTER:
       break;

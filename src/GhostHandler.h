@@ -4,6 +4,7 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <random>
 
 #ifndef PACMANSFML_GHOSTHANDLER_H
 #define PACMANSFML_GHOSTHANDLER_H
@@ -21,11 +22,20 @@ class GhostHandler
   void ghostMovement();
   void initialMovement();
   void blockHandler(bool collided);
+  int randomNumGen(int a, int b);
+  void basicMovement(int ghost_num);
 
   bool block_left = false;
   bool block_right = false;
   bool block_up = false;
   bool block_down = false;
+
+  bool move_right = false;
+  bool move_left = false;
+  bool move_up = false;
+  bool move_down = false;
+
+  sf::Clock movementTime;
 
   enum ghostState
   {
