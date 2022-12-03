@@ -113,7 +113,10 @@ bool Game::gameInit()
   player->playerSprite.setPosition(window.getSize().x/2, window.getSize().y/2);
 
   fruitSprite.setPosition(220, 660);
+  fruitSprite.setTextureRect(sf::IntRect(0,0,840,600));
+
   fruitSprite2.setPosition(window.getSize().x / 2.05, window.getSize().y / 2.6);
+  fruitSprite2.setTextureRect(sf::IntRect(0,0,840,600));
 
   ghost->movementTime.restart();
 
@@ -124,6 +127,8 @@ bool Game::gameInit()
   pellets_collected = 0;
 
   lives = 3;
+
+  powered = false;
 
   return true;
 }
